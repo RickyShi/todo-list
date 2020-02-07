@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 //Controller is a special type for component for controller.
@@ -29,11 +30,12 @@ public class DemoController {
         return "hello";
     }
 
-    /*http://localhost:8080/to*do-list/welcome*/
+    /*http://localhost:8080/to*do-list/welcome?user=kai&age=36*/
     // 1st way to add model
     @GetMapping("welcome")
-    public String welcome(Model model) {
-        model.addAttribute("helloMessage", demoService.getHelloMessage("Kai"));
+    public String welcome(@RequestParam String user, @RequestParam int age, Model model) {
+        model.addAttribute("helloMessage", demoService.getHelloMessage(user));
+        model.addAttribute("age", age);
         log.info("model={}", model);
         // prefix + name + suffix
         // /WEB-INF/view/welcome.jsp
